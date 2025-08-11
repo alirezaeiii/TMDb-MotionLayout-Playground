@@ -21,6 +21,10 @@ Add your [TMDB](https://www.themoviedb.org/) API key in the `local.properties` f
 tmdb_api_key=YOUR_API_KEY
 ```
 
+### Inspired from
+| [tivi](https://github.com/chrisbanes/tivi)
+| :-: |
+
 ## Testing
 Local unit testing is done for Repository and ViewModel layers. UI testing is done for screens with pagination using Espresso.
 
