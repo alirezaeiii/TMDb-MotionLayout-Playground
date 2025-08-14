@@ -22,8 +22,8 @@ tmdb_api_key=YOUR_API_KEY
 ```
 
 ### Inspired from
-| [tivi](https://github.com/chrisbanes/tivi)
-| :-: |
+| [tivi](https://github.com/chrisbanes/tivi) | [android-ConstraintLayoutExamples](https://github.com/googlearchive/android-ConstraintLayoutExamples/tree/master)
+| :-: | :-: |
 
 ## Testing
 Local unit testing is done for Repository and ViewModel layers. UI testing is done for screens with pagination using Espresso.
