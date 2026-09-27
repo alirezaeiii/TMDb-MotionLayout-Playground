@@ -1,32 +1,21 @@
 package com.sample.android.tmdb.ui.paging.search.tvshow
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import android.content.Context
 import com.sample.android.tmdb.data.network.TVShowService
 import com.sample.android.tmdb.data.paging.search.tvshow.SearchTVShowPageKeyRepository
 import com.sample.android.tmdb.domain.paging.BasePageKeyRepository
 import com.sample.android.tmdb.ui.paging.search.BaseSearchViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class SearchTVShowViewModel(
+@HiltViewModel
+class SearchTVShowViewModel @Inject constructor(
     private val api: TVShowService,
-    private val app: Application
-) : BaseSearchViewModel(app = app) {
+    @ApplicationContext private val context: Context
+) : BaseSearchViewModel(app = context as Application) {
 
     override fun searchRepoResult(query: String): BasePageKeyRepository =
-            SearchTVShowPageKeyRepository(api, query, networkIO, app.applicationContext)
-
-    class Factory @Inject constructor(
-        private val api: TVShowService,
-        private val app: Application
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchTVShowViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SearchTVShowViewModel(api, app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
-    }
+        SearchTVShowPageKeyRepository(api, query, networkIO, context.applicationContext)
 }

@@ -15,18 +15,16 @@ import com.sample.android.tmdb.ui.feed.tvshow.FeedTVShowFragment
 import com.sample.android.tmdb.ui.setting.SettingFragment
 import com.sample.android.tmdb.util.addFragmentToActivity
 import com.sample.android.tmdb.util.replaceFragmentInActivity
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedActivity : BaseNavigationActivity() {
 
-    @Inject
-    lateinit var feedMovieFragment: FeedMovieFragment
+    private val feedMovieFragment = FeedMovieFragment()
 
-    @Inject
-    lateinit var feedTVShowFragment: FeedTVShowFragment
+    private val feedTVShowFragment = FeedTVShowFragment()
 
-    @Inject
-    lateinit var settingFragment: SettingFragment
+    private val settingFragment = SettingFragment()
 
     private val viewModel: MainViewModel by viewModels()
 

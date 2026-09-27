@@ -1,7 +1,7 @@
 package com.sample.android.tmdb.domain.paging
 
 import androidx.annotation.MainThread
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import androidx.paging.LivePagedListBuilder
 import java.util.concurrent.Executor
 
@@ -20,11 +20,11 @@ abstract class BasePageKeyRepository(
             .setFetchExecutor(networkExecutor)
             .build()
 
-        val refreshState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+        val refreshState = sourceFactory.sourceLiveData.switchMap {
             it.initialLoad
         }
 
-        val networkState = Transformations.switchMap(sourceFactory.sourceLiveData) {
+        val networkState = sourceFactory.sourceLiveData.switchMap {
             it.networkState
         }
 

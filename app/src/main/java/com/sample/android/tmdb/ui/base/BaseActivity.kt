@@ -5,20 +5,15 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.ViewModelProvider
 import com.sample.android.tmdb.R
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
 
-abstract class BaseActivity : DaggerAppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var factory: NetworkViewModel.Factory
 
-    private val viewModel:NetworkViewModel by lazy {
-        ViewModelProvider(this, factory)[NetworkViewModel::class.java]
-    }
+    private val viewModel:NetworkViewModel by viewModels()
 
     protected abstract val networkStatusLayout: View
 

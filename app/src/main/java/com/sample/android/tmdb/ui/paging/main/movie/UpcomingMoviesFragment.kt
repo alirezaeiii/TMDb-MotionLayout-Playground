@@ -1,10 +1,10 @@
 package com.sample.android.tmdb.ui.paging.main.movie
 
 import com.sample.android.tmdb.domain.model.SortType.UPCOMING
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class UpcomingMoviesFragment @Inject
-constructor() : MoviePagingFragment() {
+@AndroidEntryPoint
+class UpcomingMoviesFragment : MoviePagingFragment() {
 
     override val sortType = UPCOMING
 }

@@ -2,13 +2,11 @@ package com.sample.android.tmdb.ui.detail.movie
 
 import com.sample.android.tmdb.ui.detail.DetailActivity
 import com.sample.android.tmdb.ui.detail.DetailFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class DetailMovieActivity: DetailActivity() {
-
-    @Inject
-    lateinit var detailMovieFragment: DetailMovieFragment
+@AndroidEntryPoint
+class DetailMovieActivity : DetailActivity() {
 
     override val fragment: DetailFragment
-        get() = detailMovieFragment
+        get() = DetailMovieFragment.newInstance(tmdbItem)
 }

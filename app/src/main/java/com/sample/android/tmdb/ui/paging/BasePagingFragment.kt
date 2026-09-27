@@ -19,7 +19,7 @@ abstract class BasePagingFragment : BaseFragment<FragmentMainBinding>() {
 
     protected lateinit var tmdbAdapter: TmdbAdapter
 
-    protected open fun refresh() {
+    protected fun refresh() {
         viewModel.refresh()
     }
 

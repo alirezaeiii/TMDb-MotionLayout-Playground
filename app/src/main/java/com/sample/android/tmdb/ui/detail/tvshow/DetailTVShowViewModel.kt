@@ -1,30 +1,23 @@
 package com.sample.android.tmdb.ui.detail.tvshow
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.domain.repository.TVShowDetailRepository
 import com.sample.android.tmdb.ui.detail.DetailViewModel
-import javax.inject.Inject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-class DetailTVShowViewModel(
+@HiltViewModel(assistedFactory = DetailTVShowViewModel.Factory::class)
+class DetailTVShowViewModel @AssistedInject constructor(
     repository: TVShowDetailRepository,
-    item: TmdbItem
+    @Assisted item: TmdbItem
 ) : DetailViewModel(
     repository.getTVShowTrailers(item.id),
     repository.getTVShowCredit(item.id)
 ) {
-
-    class Factory @Inject constructor(
-        private val repository: TVShowDetailRepository,
-        private val item: TmdbItem
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailTVShowViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DetailTVShowViewModel(repository, item) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(item: TmdbItem): DetailTVShowViewModel
     }
 }

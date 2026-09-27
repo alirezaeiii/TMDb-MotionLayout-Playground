@@ -3,18 +3,19 @@ package com.sample.android.tmdb.ui.paging.search
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.sample.android.tmdb.domain.paging.BasePageKeyRepository
 import com.sample.android.tmdb.domain.paging.Listing
 import com.sample.android.tmdb.ui.paging.BasePagingViewModel
 
 abstract class BaseSearchViewModel(app: Application) : BasePagingViewModel(app) {
 
-    private val query = MutableLiveData<String>()
+    private val _query = MutableLiveData<String>()
+    val query: LiveData<String> = _query
 
     protected abstract fun searchRepoResult(query : String) : BasePageKeyRepository
 
-    override val repoResult: LiveData<Listing> = Transformations.map(query) {
+    override val repoResult: LiveData<Listing> = query.map {
         searchRepoResult(it).getItems()
     }
 
@@ -22,7 +23,13 @@ abstract class BaseSearchViewModel(app: Application) : BasePagingViewModel(app) 
         if (this.query.value == query) {
             return false
         }
-        this.query.value = query
+        this._query.value = query
         return true
     }
+
+    fun onQuerySubmitted(q: String) { _query.value = q }
+
+    fun onQueryChanged(q: String) { _query.value = q }
+
+    fun onQueryCleared() { _query.value = "" }
 }

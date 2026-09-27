@@ -9,13 +9,13 @@ import android.net.NetworkRequest
 import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.distinctUntilChanged
 
 class NetworkUtils(application: Application) : ConnectivityManager.NetworkCallback() {
 
     private val _networkLiveData: MutableLiveData<Boolean> = MutableLiveData()
     val networkLiveData: LiveData<Boolean>
-        get() = Transformations.distinctUntilChanged(_networkLiveData)
+        get() = _networkLiveData.distinctUntilChanged()
 
     private val connectivityManager =
         application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

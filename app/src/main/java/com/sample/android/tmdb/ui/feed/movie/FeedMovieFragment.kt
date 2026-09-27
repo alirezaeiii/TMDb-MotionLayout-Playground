@@ -1,17 +1,12 @@
 package com.sample.android.tmdb.ui.feed.movie
 
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.sample.android.tmdb.domain.model.Movie
 import com.sample.android.tmdb.ui.feed.FeedFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class FeedMovieFragment @Inject
-constructor() // Required empty public constructor
-    : FeedFragment<Movie>() {
+@AndroidEntryPoint
+class FeedMovieFragment : FeedFragment<Movie>() {
 
-    @Inject
-    lateinit var factory: FeedMovieViewModel.Factory
-
-    override val viewModel
-        get() = ViewModelProvider(this, factory)[FeedMovieViewModel::class.java]
+    override val viewModel: FeedMovieViewModel by viewModels()
 }

@@ -1,16 +1,29 @@
 package com.sample.android.tmdb.ui.detail.movie
 
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.ui.detail.DetailFragment
-import javax.inject.Inject
+import com.sample.android.tmdb.util.Constants.EXTRA_TMDB_ITEM
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 
-class DetailMovieFragment @Inject
-constructor() // Required empty public constructor
-    : DetailFragment() {
+@AndroidEntryPoint
+class DetailMovieFragment : DetailFragment() {
 
-    @Inject
-    lateinit var factory: DetailMovieViewModel.Factory
+    override val viewModel: DetailMovieViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<DetailMovieViewModel.Factory> { factory ->
+                factory.create(item)
+            }
+        })
 
-    override val viewModel
-        get() = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
+    companion object {
+
+        fun newInstance(item: TmdbItem): DetailMovieFragment {
+            return DetailMovieFragment().apply {
+                arguments = bundleOf(EXTRA_TMDB_ITEM to item)
+            }
+        }
+    }
 }

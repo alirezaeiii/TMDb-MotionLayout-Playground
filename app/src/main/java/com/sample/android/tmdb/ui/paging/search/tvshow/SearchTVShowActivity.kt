@@ -1,17 +1,18 @@
 package com.sample.android.tmdb.ui.paging.search.tvshow
 
+import androidx.activity.viewModels
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.ui.paging.search.SearchActivity
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchTVShowActivity: SearchActivity() {
 
-    @Inject
-    lateinit var searchTVShowFragment: SearchTVShowFragment
-
     override val fragment: SearchTVShowFragment
-        get() = searchTVShowFragment
+        get() = SearchTVShowFragment()
 
     override val hintId: Int
         get() = R.string.menu_tv_series
+
+    override val searchViewModel: SearchTVShowViewModel by viewModels()
 }

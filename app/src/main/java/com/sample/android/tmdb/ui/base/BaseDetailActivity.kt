@@ -3,10 +3,10 @@ package com.sample.android.tmdb.ui.base
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.databinding.ActivityDetailBinding
 import com.sample.android.tmdb.util.addFragmentToActivity
-import dagger.android.support.DaggerFragment
 
 abstract class BaseDetailActivity : BaseActivity() {
 
@@ -16,7 +16,7 @@ abstract class BaseDetailActivity : BaseActivity() {
 
     override val textViewNetworkStatus: TextView by lazy { binding.itemContainer.textViewNetworkStatus }
 
-    protected abstract val fragment: DaggerFragment
+    protected abstract val fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

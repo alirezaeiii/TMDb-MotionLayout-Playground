@@ -1,10 +1,10 @@
 package com.sample.android.tmdb.ui.paging.main.tvshow
 
 import com.sample.android.tmdb.domain.model.SortType.HIGHEST_RATED
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class HighRateTVShowFragment @Inject
-constructor() : TVShowPagingFragment() {
+@AndroidEntryPoint
+class HighRateTVShowFragment : TVShowPagingFragment() {
 
     override val sortType = HIGHEST_RATED
 }

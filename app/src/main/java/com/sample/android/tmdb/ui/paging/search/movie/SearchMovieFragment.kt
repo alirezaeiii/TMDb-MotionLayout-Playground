@@ -1,17 +1,11 @@
 package com.sample.android.tmdb.ui.paging.search.movie
 
-import androidx.lifecycle.ViewModelProvider
-import com.sample.android.tmdb.domain.model.Movie
+import androidx.fragment.app.activityViewModels
 import com.sample.android.tmdb.ui.paging.search.BaseSearchFragment
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
-class SearchMovieFragment @Inject
-constructor() // Required empty public constructor
-    : BaseSearchFragment() {
+@AndroidEntryPoint
+class SearchMovieFragment : BaseSearchFragment() {
 
-    @Inject
-    lateinit var factory: SearchMovieViewModel.Factory
-
-    override val viewModel
-        get() = ViewModelProvider(this, factory)[SearchMovieViewModel::class.java]
+    override val viewModel: SearchMovieViewModel by activityViewModels()
 }

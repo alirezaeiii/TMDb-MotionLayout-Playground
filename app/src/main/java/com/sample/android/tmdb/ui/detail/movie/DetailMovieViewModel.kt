@@ -1,30 +1,23 @@
 package com.sample.android.tmdb.ui.detail.movie
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.domain.repository.MovieDetailRepository
 import com.sample.android.tmdb.ui.detail.DetailViewModel
-import javax.inject.Inject
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 
-class DetailMovieViewModel(
+@HiltViewModel(assistedFactory = DetailMovieViewModel.Factory::class)
+class DetailMovieViewModel @AssistedInject constructor(
     repository: MovieDetailRepository,
-    item: TmdbItem
+    @Assisted item: TmdbItem
 ) : DetailViewModel(
     repository.getMovieTrailers(item.id),
     repository.getMovieCredit(item.id)
 ) {
-
-    class Factory @Inject constructor(
-        private val repository: MovieDetailRepository,
-        private val item: TmdbItem
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DetailMovieViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DetailMovieViewModel(repository, item) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
+    @AssistedFactory
+    interface Factory {
+        fun create(item: TmdbItem): DetailMovieViewModel
     }
 }

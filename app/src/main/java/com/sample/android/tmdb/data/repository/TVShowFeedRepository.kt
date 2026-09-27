@@ -7,13 +7,14 @@ import com.sample.android.tmdb.data.response.asTVShowDomainModel
 import com.sample.android.tmdb.di.IoDispatcher
 import com.sample.android.tmdb.domain.model.TVShow
 import com.sample.android.tmdb.domain.repository.BaseFeedRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TVShowFeedRepository @Inject constructor(
-    context: Context,
+    @ApplicationContext context: Context,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     private val tvShowApi: TVShowService,
 ) : BaseFeedRepository<TVShow>(context, ioDispatcher) {
