@@ -1,29 +1,22 @@
 package com.sample.android.tmdb.ui.paging.search
 
-import com.sample.android.tmdb.domain.paging.Status.RUNNING
+import android.os.Bundle
+import android.view.View
 import com.sample.android.tmdb.ui.paging.BasePagingFragment
-import com.sample.android.tmdb.util.toVisibility
 
 abstract class BaseSearchFragment : BasePagingFragment() {
 
     private val searchViewModel
         get() = viewModel as BaseSearchViewModel
 
-    override fun refresh() {
-        super.refresh()
-        searchViewModel.refreshState.removeObservers(this)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    fun search(query: String) {
-        if (searchViewModel.showQuery(query)) {
-            binding.recyclerView.scrollToPosition(0)
-            tmdbAdapter.submitList(null)
-        }
-    }
-
-    fun observeRefreshState() {
-        searchViewModel.refreshState.observe(this) {
-            binding.recyclerView.toVisibility(it.status != RUNNING)
+        searchViewModel.query.observe(viewLifecycleOwner) { q ->
+            if (!q.isNullOrEmpty() && searchViewModel.showQuery(q)) {
+                binding.recyclerView.scrollToPosition(0)
+                tmdbAdapter.submitList(null)
+            }
         }
     }
 }

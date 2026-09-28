@@ -16,14 +16,15 @@ import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.ui.base.BaseDetailFragment
 import com.sample.android.tmdb.ui.detail.credit.CreditAdapter
 import com.sample.android.tmdb.ui.detail.credit.CreditClickListener
+import com.sample.android.tmdb.util.Constants.EXTRA_TMDB_ITEM
 import com.sample.android.tmdb.util.setupActionBar
 import com.sample.android.tmdb.util.toVisibility
-import javax.inject.Inject
 
 abstract class DetailFragment : BaseDetailFragment<DetailViewModel, FragmentDetailBinding>() {
 
-    @Inject
-    lateinit var tmdbItem: TmdbItem
+    protected val item: TmdbItem by lazy {
+        requireArguments().getParcelable(EXTRA_TMDB_ITEM)!!
+    }
 
     override fun setBinding() = FragmentDetailBinding.inflate(layoutInflater)
 
@@ -32,7 +33,7 @@ abstract class DetailFragment : BaseDetailFragment<DetailViewModel, FragmentDeta
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         with(binding) {
-            tmdbItem = this@DetailFragment.tmdbItem
+            tmdbItem = this@DetailFragment.item
             viewModel.liveData.observe(viewLifecycleOwner) { detailWrapper ->
                 castList.setupAdapter(detailWrapper.cast)
                 crewList.setupAdapter(detailWrapper.crew)
@@ -46,7 +47,7 @@ abstract class DetailFragment : BaseDetailFragment<DetailViewModel, FragmentDeta
             }
 
 
-            this@DetailFragment.tmdbItem.overview.trim().isNotEmpty().also {
+            this@DetailFragment.item.overview.trim().isNotEmpty().also {
                 summaryLabel.toVisibility(it)
                 summary.toVisibility(it)
             }

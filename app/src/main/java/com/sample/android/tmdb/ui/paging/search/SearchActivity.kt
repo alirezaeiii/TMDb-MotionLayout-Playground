@@ -17,6 +17,8 @@ abstract class SearchActivity : BaseActivity() {
 
     protected abstract val fragment: BaseSearchFragment
 
+    protected abstract val searchViewModel: BaseSearchViewModel
+
     protected abstract val hintId: Int
 
     private lateinit var binding: ActivitySearchBinding
@@ -48,7 +50,7 @@ abstract class SearchActivity : BaseActivity() {
 
             searchView.setOnQueryTextListener(object : OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
-                    fragment.search(query)
+                    searchViewModel.onQuerySubmitted(query)
                     return true
                 }
 
@@ -56,10 +58,10 @@ abstract class SearchActivity : BaseActivity() {
                     with(itemContainer) {
                         if (query.isNotEmpty()) {
                             fragmentContainer.visibility = View.VISIBLE
-                            fragment.search(query)
+                            searchViewModel.onQueryChanged(query)
                         } else {
                             fragmentContainer.visibility = View.GONE
-                            fragment.observeRefreshState()
+                            searchViewModel.onQueryCleared()
                         }
                     }
                     return true

@@ -2,14 +2,16 @@ package com.sample.android.tmdb.ui.start
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.ui.feed.FeedActivity
-import dagger.android.support.DaggerAppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
 
-class StartActivity : DaggerAppCompatActivity() {
+@AndroidEntryPoint
+class StartActivity : AppCompatActivity() {
 
     @Inject
     lateinit var inAppUpdateHandler: InAppUpdateHandler

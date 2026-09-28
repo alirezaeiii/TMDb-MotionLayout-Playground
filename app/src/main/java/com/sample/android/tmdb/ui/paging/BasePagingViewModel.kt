@@ -3,7 +3,7 @@ package com.sample.android.tmdb.ui.paging
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.switchMap
 import androidx.paging.PagedList
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.domain.paging.Listing
@@ -19,9 +19,9 @@ abstract class BasePagingViewModel(app: Application) : AndroidViewModel(app) {
 
     protected abstract val repoResult: LiveData<Listing>
 
-    val items: LiveData<PagedList<TmdbItem>> by lazy { switchMap(repoResult) { it.pagedList } }
-    val networkState: LiveData<NetworkState> by lazy { switchMap(repoResult) { it.networkState } }
-    val refreshState: LiveData<NetworkState> by lazy { switchMap(repoResult) { it.refreshState } }
+    val items: LiveData<PagedList<TmdbItem>> by lazy { repoResult.switchMap { it.pagedList } }
+    val networkState: LiveData<NetworkState> by lazy { repoResult.switchMap { it.networkState } }
+    val refreshState: LiveData<NetworkState> by lazy { repoResult.switchMap { it.refreshState } }
 
     fun refresh() {
         repoResult.value?.refresh?.invoke()

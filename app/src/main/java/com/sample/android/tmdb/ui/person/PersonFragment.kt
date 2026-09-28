@@ -4,27 +4,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.databinding.FragmentPersonBinding
 import com.sample.android.tmdb.domain.model.Credit
 import com.sample.android.tmdb.ui.base.BaseDetailFragment
+import com.sample.android.tmdb.util.Constants.CREDIT
 import com.sample.android.tmdb.util.toVisibility
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.withCreationCallback
 
-class PersonFragment @Inject
-constructor() // Required empty public constructor
-    : BaseDetailFragment<PersonViewModel, FragmentPersonBinding>() {
+@AndroidEntryPoint
+class PersonFragment : BaseDetailFragment<PersonViewModel, FragmentPersonBinding>() {
 
-    @Inject
-    lateinit var factory: PersonViewModel.Factory
-
-    @Inject
-    lateinit var credit: Credit
-
-    override val viewModel: PersonViewModel by lazy {
-        ViewModelProvider(this, factory)[PersonViewModel::class.java]
+    private val credit: Credit by lazy {
+        requireArguments().getParcelable(CREDIT)!!
     }
+
+    override val viewModel: PersonViewModel by viewModels(
+        extrasProducer = {
+            defaultViewModelCreationExtras.withCreationCallback<PersonViewModel.Factory> { factory ->
+                factory.create(credit.id.toString())
+            }
+        })
 
     override fun setBinding() = FragmentPersonBinding.inflate(layoutInflater)
 
@@ -49,5 +52,14 @@ constructor() // Required empty public constructor
             }
         }
         return binding.root
+    }
+
+    companion object {
+
+        fun newInstance(credit: Credit): PersonFragment {
+            return PersonFragment().apply {
+                arguments = bundleOf(CREDIT to credit)
+            }
+        }
     }
 }

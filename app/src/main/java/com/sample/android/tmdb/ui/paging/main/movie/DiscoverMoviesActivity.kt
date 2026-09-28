@@ -1,16 +1,14 @@
 package com.sample.android.tmdb.ui.paging.main.movie
 
 import com.sample.android.tmdb.R
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DiscoverMoviesActivity: MoviePagingActivity() {
-
-    @Inject
-    lateinit var discoverMoviesFragment: DiscoverMoviesFragment
 
     override val titleId: Int
         get() = R.string.discover
 
     override val fragment: MoviePagingFragment
-        get() = discoverMoviesFragment
+        get() = DiscoverMoviesFragment()
 }

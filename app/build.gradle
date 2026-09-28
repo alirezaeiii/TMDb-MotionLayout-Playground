@@ -1,8 +1,12 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id("com.android.application")
+    id("kotlin-parcelize")
+    id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("com.android.legacy-kapt")
+}
 
 def appVersion = (new File(project.rootDir, 'version.txt')).text.trim()
 
@@ -14,6 +18,7 @@ ext.generateVersionCode = { versionName ->
 }
 
 android {
+    namespace 'com.sample.android.tmdb'
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.sample.android.tmdb"
@@ -44,20 +49,10 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion compose
-        kotlinCompilerVersion kotlin_version
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn", "-Xjvm-default=all"]
+        dataBinding = true
+        buildConfig = true
+        compose = true
     }
 }
 
@@ -71,6 +66,8 @@ dependencies {
     implementation "androidx.palette:palette-ktx:$paletteVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "com.google.guava:guava:$guavaVersion"
+
+    implementation "androidx.fragment:fragment-ktx:1.8.0"
 
     // Architecture components
     implementation "androidx.paging:paging-runtime:$pagingVersion"
@@ -94,13 +91,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
 
-    // Dagger
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    implementation "com.google.dagger:dagger-android:$daggerVersion"
-    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
-    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
-
     //Android RX
     implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
@@ -109,13 +99,17 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
-    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    ksp "com.github.bumptech.glide:compiler:$glideVersion"
 
     // Timber
     implementation "com.jakewharton.timber:timber:$timberVersion"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // Dagger
+    implementation "com.google.dagger:hilt-android:2.60.1"
+    ksp "com.google.dagger:hilt-android-compiler:2.60.1"
 
     // Firebase
     implementation 'com.google.android.play:core:1.10.2'

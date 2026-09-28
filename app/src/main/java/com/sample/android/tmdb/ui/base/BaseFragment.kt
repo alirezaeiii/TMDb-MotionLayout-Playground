@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import com.sample.android.tmdb.domain.model.Movie
 import com.sample.android.tmdb.domain.model.TVShow
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.ui.detail.movie.DetailMovieActivity
 import com.sample.android.tmdb.ui.detail.tvshow.DetailTVShowActivity
 import com.sample.android.tmdb.util.Constants.EXTRA_TMDB_ITEM
-import dagger.android.support.DaggerFragment
 
-open class BaseFragment<VB: ViewDataBinding>: DaggerFragment() {
+open class BaseFragment<VB: ViewDataBinding>: Fragment() {
 
     private var _binding: VB? = null
 

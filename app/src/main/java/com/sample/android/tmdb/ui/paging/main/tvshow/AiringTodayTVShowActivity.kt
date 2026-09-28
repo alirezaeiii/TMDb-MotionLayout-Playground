@@ -1,16 +1,14 @@
 package com.sample.android.tmdb.ui.paging.main.tvshow
 
 import com.sample.android.tmdb.R
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AiringTodayTVShowActivity: TVShowPagingActivity() {
-
-    @Inject
-    lateinit var airingTodayTVShowFragment: AiringTodayTVShowsFragment
 
     override val titleId: Int
         get() = R.string.airing_today
 
     override val fragment: TVShowPagingFragment
-        get() = airingTodayTVShowFragment
+        get() = AiringTodayTVShowsFragment()
 }

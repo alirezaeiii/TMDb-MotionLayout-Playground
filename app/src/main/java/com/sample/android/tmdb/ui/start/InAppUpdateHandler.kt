@@ -94,7 +94,7 @@ class InAppUpdateHandler @Inject constructor(
             remoteConfig.getString("maximum_version_for_immediate_update")
         if (maximumVersionForImmediateUpdate.isNotEmpty()) {
             val currentVersion =
-                (activity.packageManager.getPackageInfo(activity.packageName, 0).versionName)
+                (activity.packageManager.getPackageInfo(activity.packageName, 0).versionName)!!
             Timber.i("current version name: $currentVersion")
             Timber.i("maximum version for immediate update: $maximumVersionForImmediateUpdate")
             return compareSemanticVersions(currentVersion, maximumVersionForImmediateUpdate) <= 0

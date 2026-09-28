@@ -13,9 +13,12 @@ import com.sample.android.tmdb.domain.repository.PersonRepository
 import com.sample.android.tmdb.domain.repository.TVShowDetailRepository
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
 
     @Singleton
