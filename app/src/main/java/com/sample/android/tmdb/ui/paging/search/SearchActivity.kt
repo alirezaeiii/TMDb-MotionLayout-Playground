@@ -56,11 +56,9 @@ abstract class SearchActivity : BaseActivity() {
                 }
 
                 override fun onQueryTextChange(query: String): Boolean {
-                    if (query.isNotEmpty()) {
-                        searchViewModel.onQuerySubmitted(query)
-                    } else {
-                        searchViewModel.onQueryCleared()
-                    }
+                    if (query == searchViewModel.query.value) return true
+                    if (query.isNotEmpty()) searchViewModel.onQuerySubmitted(query)
+                    else searchViewModel.onQueryCleared()
                     return true
                 }
             })
