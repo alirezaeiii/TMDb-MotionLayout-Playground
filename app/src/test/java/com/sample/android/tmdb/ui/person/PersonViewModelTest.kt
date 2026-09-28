@@ -2,8 +2,8 @@ package com.sample.android.tmdb.ui.person
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sample.android.tmdb.TestRxJavaRule
-import com.sample.android.tmdb.domain.repository.PersonRepository
 import com.sample.android.tmdb.domain.model.Person
+import com.sample.android.tmdb.domain.repository.PersonRepository
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
@@ -39,9 +39,9 @@ class PersonViewModelTest {
                 "biography", "place")
 
         val observableResponse = Single.just(person)
-        `when`(repository.getPerson(anyInt())).thenReturn(observableResponse)
+        `when`(repository.getPerson(anyString())).thenReturn(observableResponse)
 
-        val viewModel = PersonViewModel(repository, anyInt())
+        val viewModel = PersonViewModel(repository, anyString())
 
         viewModel.liveData.value?.let {
             assertTrue(it.id == personId)
@@ -53,9 +53,9 @@ class PersonViewModelTest {
 
     @Test
     fun errorLoadPerson() {
-        `when`(repository.getPerson(anyInt())).thenReturn(Single.error(Exception()))
+        `when`(repository.getPerson(anyString())).thenReturn(Single.error(Exception()))
 
-        val viewModel = PersonViewModel(repository, anyInt())
+        val viewModel = PersonViewModel(repository, anyString())
 
         with(viewModel) {
             assertThat(liveData.value, `is`(nullValue()))

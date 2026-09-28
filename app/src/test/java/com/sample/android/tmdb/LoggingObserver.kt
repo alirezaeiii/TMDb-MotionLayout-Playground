@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
  */
 class LoggingObserver<T> : Observer<T> {
     var value: T? = null
-    override fun onChanged(t: T?) {
-        this.value = t
+    override fun onChanged(value: T) {
+        this.value = value
     }
 }
