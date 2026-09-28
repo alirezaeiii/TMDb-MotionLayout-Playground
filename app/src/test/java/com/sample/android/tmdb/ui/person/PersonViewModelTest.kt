@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyString
+import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
@@ -39,9 +39,9 @@ class PersonViewModelTest {
                 "biography", "place")
 
         val observableResponse = Single.just(person)
-        `when`(repository.getPerson(anyString())).thenReturn(observableResponse)
+        `when`(repository.getPerson(anyInt())).thenReturn(observableResponse)
 
-        val viewModel = PersonViewModel(repository, anyString())
+        val viewModel = PersonViewModel(repository, anyInt())
 
         viewModel.liveData.value?.let {
             assertTrue(it.id == personId)
@@ -53,9 +53,9 @@ class PersonViewModelTest {
 
     @Test
     fun errorLoadPerson() {
-        `when`(repository.getPerson(anyString())).thenReturn(Single.error(Exception()))
+        `when`(repository.getPerson(anyInt())).thenReturn(Single.error(Exception()))
 
-        val viewModel = PersonViewModel(repository, anyString())
+        val viewModel = PersonViewModel(repository, anyInt())
 
         with(viewModel) {
             assertThat(liveData.value, `is`(nullValue()))
