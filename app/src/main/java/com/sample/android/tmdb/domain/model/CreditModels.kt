@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 interface Credit : Parcelable {
-    val id: Any
+    val id: Int
     val role: String
     val name: String
     val profileUrl: String?
@@ -23,5 +23,5 @@ class Crew(
     override val role: String,
     override val name: String,
     override val profileUrl: String?,
-    override val id: String
+    override val id: Int
 ) : Credit

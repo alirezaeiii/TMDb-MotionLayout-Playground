@@ -1,5 +1,5 @@
 # TMDb-Paging-Playground
-A sample to showcase Kotlin, MVVM, Paging, Dagger, RxJava, Coroutines, Jetpack Compose, Retrofit, DataBinding, MotionLayout, Espresso and Unit test. [Known issue](https://issuetracker.google.com/issues/251812970)
+A sample to showcase Kotlin, MVVM, Paging2, RxJava2, Coroutines, Hilt, Jetpack Compose, Retrofit, DataBinding, MotionLayout, Espresso and Unit test. [Known issue](https://issuetracker.google.com/issues/251812970)
 
 ## Screenshots
 <p float="left">
@@ -35,8 +35,8 @@ Local unit testing is done for Repository and ViewModel layers. UI testing is do
    * [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) ViewModel is designed to store and manage UI-related data in a lifecycle conscious way. This allows data to survive configuration changes such as screen rotations.
    * [DataBinding](https://developer.android.com/topic/libraries/data-binding/) is a Library in the support library that allows you to bind UI components in your layouts to data sources in your app using a declarative format rather than programmatically.
    * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) is lifecycle-aware, meaning it respects the lifecycle of other app components updating app component observers that are in an active lifecycle state.
+   * [Hilt](https://developer.android.com/training/dependency-injection/hilt-android) is a dependency injection library for Android that reduces the boilerplate of doing manual dependency injection in your project.
 * [Glide](https://github.com/bumptech/glide) is an image loading and caching library for Android.
-* [Dagger](https://github.com/google/dagger) is a fully static, compile-time dependency injection framework for Java, Kotlin, and Android.
 * [RxJava](https://github.com/ReactiveX/RxJava) is a library for composing asynchronous code using observable sequences.
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid) is a module that adds the minimum classes to RxJava to make writing reactive components in Android.
 * [Kotlin coroutines](https://developer.android.com/kotlin/coroutines) Executing code asynchronously.

@@ -13,6 +13,6 @@ class PersonRepositoryImpl @Inject constructor(
     private val personApi: PersonService
 ) : PersonRepository {
 
-    override fun getPerson(personId: Any): Single<Person> =
+    override fun getPerson(personId: Int): Single<Person> =
         personApi.getPerson(personId).map { it.asDomainModel() }
 }

@@ -26,7 +26,7 @@ class NetworkCrew(
     @SerializedName(PROFILE_PATH)
     val profilePath: String?,
     @SerializedName(ID)
-    val id: String
+    val id: Int
 )
 
 fun List<NetworkCast>.asCastDomainModel(): List<Cast> = map {

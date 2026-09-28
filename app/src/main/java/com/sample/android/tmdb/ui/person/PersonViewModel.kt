@@ -11,11 +11,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @HiltViewModel(assistedFactory = PersonViewModel.Factory::class)
 class PersonViewModel @AssistedInject constructor(
     repository: PersonRepository,
-    @Assisted personId: String
+    @Assisted personId: Int
 ) : BaseDetailViewModel<Person>(repository.getPerson(personId)) {
 
     @AssistedFactory
     interface Factory {
-        fun create(personId: String): PersonViewModel
+        fun create(personId: Int): PersonViewModel
     }
 }

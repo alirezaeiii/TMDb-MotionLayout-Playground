@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.databinding.ActivitySearchBinding
 import com.sample.android.tmdb.ui.base.BaseActivity
-import com.sample.android.tmdb.util.replaceFragmentInActivity
+import com.sample.android.tmdb.util.addFragmentToActivity
 
 abstract class SearchActivity : BaseActivity() {
 
@@ -45,7 +45,9 @@ abstract class SearchActivity : BaseActivity() {
             }
 
             searchView.queryHint = getString(R.string.search_hint, getString(hintId))
-            replaceFragmentInActivity(fragment, R.id.fragment_container)
+            if (savedInstanceState == null) {
+                addFragmentToActivity(fragment, R.id.fragment_container)
+            }
 
             searchView.setOnQueryTextListener(object : OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {

@@ -8,5 +8,5 @@ import retrofit2.http.Path
 interface PersonService {
 
     @GET("3/person/{personId}")
-    fun getPerson(@Path("personId") personId: Any): Single<PersonResponse>
+    fun getPerson(@Path("personId") personId: Int): Single<PersonResponse>
 }

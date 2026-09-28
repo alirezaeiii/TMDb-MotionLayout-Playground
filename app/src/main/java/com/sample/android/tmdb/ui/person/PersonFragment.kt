@@ -25,7 +25,7 @@ class PersonFragment : BaseDetailFragment<PersonViewModel, FragmentPersonBinding
     override val viewModel: PersonViewModel by viewModels(
         extrasProducer = {
             defaultViewModelCreationExtras.withCreationCallback<PersonViewModel.Factory> { factory ->
-                factory.create(credit.id.toString())
+                factory.create(credit.id)
             }
         })
 
