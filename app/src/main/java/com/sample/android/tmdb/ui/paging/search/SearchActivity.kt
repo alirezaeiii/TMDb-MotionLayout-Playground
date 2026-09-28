@@ -1,7 +1,6 @@
 package com.sample.android.tmdb.ui.paging.search
 
 import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -32,7 +31,7 @@ abstract class SearchActivity : BaseActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
         with(binding) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
             // inputType & ime options seem to be ignored from XML! Set in code
@@ -55,14 +54,10 @@ abstract class SearchActivity : BaseActivity() {
                 }
 
                 override fun onQueryTextChange(query: String): Boolean {
-                    with(itemContainer) {
-                        if (query.isNotEmpty()) {
-                            fragmentContainer.visibility = View.VISIBLE
-                            searchViewModel.onQueryChanged(query)
-                        } else {
-                            fragmentContainer.visibility = View.GONE
-                            searchViewModel.onQueryCleared()
-                        }
+                    if (query.isNotEmpty()) {
+                        searchViewModel.onQueryChanged(query)
+                    } else {
+                        searchViewModel.onQueryCleared()
                     }
                     return true
                 }
