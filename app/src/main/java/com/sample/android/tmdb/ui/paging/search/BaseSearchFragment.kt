@@ -13,7 +13,7 @@ abstract class BaseSearchFragment : BasePagingFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         searchViewModel.query.observe(viewLifecycleOwner) { q ->
-            if (!q.isNullOrEmpty() && searchViewModel.showQuery(q)) {
+            if (q.isNullOrEmpty() || searchViewModel.showQuery(q)) {
                 binding.recyclerView.scrollToPosition(0)
                 tmdbAdapter.submitList(null)
             }

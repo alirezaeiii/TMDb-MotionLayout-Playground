@@ -17,11 +17,11 @@ abstract class BasePagingViewModel(app: Application) : AndroidViewModel(app) {
     // thread pool used for network requests
     protected val networkIO: ExecutorService = Executors.newFixedThreadPool(5)
 
-    protected abstract val repoResult: LiveData<Listing>
+    protected abstract val repoResult: LiveData<Listing?>
 
-    val items: LiveData<PagedList<TmdbItem>> by lazy { repoResult.switchMap { it.pagedList } }
-    val networkState: LiveData<NetworkState> by lazy { repoResult.switchMap { it.networkState } }
-    val refreshState: LiveData<NetworkState> by lazy { repoResult.switchMap { it.refreshState } }
+    val items: LiveData<PagedList<TmdbItem>> by lazy { repoResult.switchMap { it?.pagedList } }
+    val networkState: LiveData<NetworkState> by lazy { repoResult.switchMap { it?.networkState } }
+    val refreshState: LiveData<NetworkState> by lazy { repoResult.switchMap { it?.refreshState } }
 
     fun refresh() {
         repoResult.value?.refresh?.invoke()

@@ -10,26 +10,20 @@ import com.sample.android.tmdb.ui.paging.BasePagingViewModel
 
 abstract class BaseSearchViewModel(app: Application) : BasePagingViewModel(app) {
 
-    private val _query = MutableLiveData<String>()
-    val query: LiveData<String> = _query
+    private val _query = MutableLiveData<String?>()
+    val query: LiveData<String?> = _query
 
     protected abstract fun searchRepoResult(query : String) : BasePageKeyRepository
 
-    override val repoResult: LiveData<Listing> = query.map {
-        searchRepoResult(it).getItems()
+    override val repoResult: LiveData<Listing?> = query.map { q ->
+        q?.let { searchRepoResult(it).getItems() }
     }
 
-    fun showQuery(query: String): Boolean {
-        if (this.query.value == query) {
-            return false
-        }
-        this._query.value = query
-        return true
-    }
+    fun showQuery(query: String): Boolean = this.query.value != query
 
     fun onQuerySubmitted(q: String) { _query.value = q }
 
     fun onQueryChanged(q: String) { _query.value = q }
 
-    fun onQueryCleared() { _query.value = "" }
+    fun onQueryCleared() { _query.value = null }
 }

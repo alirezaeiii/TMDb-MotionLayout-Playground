@@ -11,7 +11,7 @@ abstract class BaseMainPagingViewModel(app: Application) : BasePagingViewModel(a
 
     protected abstract val mainRepoResult : BasePageKeyRepository
 
-    override val repoResult: LiveData<Listing> = liveData {
+    override val repoResult: LiveData<Listing?> = liveData {
         emit(mainRepoResult.getItems())
     }
 }
