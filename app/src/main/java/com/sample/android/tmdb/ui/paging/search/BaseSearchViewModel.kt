@@ -19,11 +19,7 @@ abstract class BaseSearchViewModel(app: Application) : BasePagingViewModel(app) 
         q?.let { searchRepoResult(it).getItems() }
     }
 
-    fun showQuery(query: String): Boolean = this.query.value != query
-
     fun onQuerySubmitted(q: String) { _query.value = q }
-
-    fun onQueryChanged(q: String) { _query.value = q }
 
     fun onQueryCleared() { _query.value = null }
 }

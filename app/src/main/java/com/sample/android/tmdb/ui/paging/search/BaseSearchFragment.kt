@@ -12,11 +12,9 @@ abstract class BaseSearchFragment : BasePagingFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel.query.observe(viewLifecycleOwner) { q ->
-            if (q.isNullOrEmpty() || searchViewModel.showQuery(q)) {
-                binding.recyclerView.scrollToPosition(0)
-                tmdbAdapter.submitList(null)
-            }
+        searchViewModel.query.observe(viewLifecycleOwner) {
+            binding.recyclerView.scrollToPosition(0)
+            tmdbAdapter.submitList(null)
         }
     }
 }

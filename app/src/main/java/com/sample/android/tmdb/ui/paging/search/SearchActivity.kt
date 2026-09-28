@@ -55,7 +55,7 @@ abstract class SearchActivity : BaseActivity() {
 
                 override fun onQueryTextChange(query: String): Boolean {
                     if (query.isNotEmpty()) {
-                        searchViewModel.onQueryChanged(query)
+                        searchViewModel.onQuerySubmitted(query)
                     } else {
                         searchViewModel.onQueryCleared()
                     }
