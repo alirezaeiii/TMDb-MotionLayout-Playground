@@ -3,6 +3,7 @@ package com.sample.android.tmdb.ui.detail.movie
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.domain.repository.MovieDetailRepository
 import com.sample.android.tmdb.ui.detail.DetailViewModel
+import com.sample.android.tmdb.ui.detail.combineDetail
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -13,8 +14,10 @@ class DetailMovieViewModel @AssistedInject constructor(
     repository: MovieDetailRepository,
     @Assisted item: TmdbItem
 ) : DetailViewModel(
-    repository.getMovieTrailers(item.id),
-    repository.getMovieCredit(item.id)
+    combineDetail(
+        repository.getMovieTrailers(item.id),
+        repository.getMovieCredit(item.id),
+    )
 ) {
     @AssistedFactory
     interface Factory {
