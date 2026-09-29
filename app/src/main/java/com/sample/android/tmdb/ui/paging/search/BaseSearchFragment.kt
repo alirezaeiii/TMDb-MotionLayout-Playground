@@ -16,7 +16,6 @@ abstract class BaseSearchFragment : BasePagingFragment() {
             if (q.isNullOrBlank()) {
                 tmdbAdapter.submitList(null)
             }
-            binding.recyclerView.scrollToPosition(0)
         }
     }
 }
