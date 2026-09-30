@@ -6,13 +6,10 @@ import com.sample.android.tmdb.ui.paging.BasePagingFragment
 
 abstract class BaseSearchFragment : BasePagingFragment() {
 
-    private val searchViewModel
-        get() = viewModel as BaseSearchViewModel
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchViewModel.query.observe(viewLifecycleOwner) { q ->
+        (viewModel as BaseSearchViewModel).query.observe(viewLifecycleOwner) { q ->
             if (q.isNullOrBlank()) {
                 tmdbAdapter.submitList(null)
             }
