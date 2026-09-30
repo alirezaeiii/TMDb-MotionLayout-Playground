@@ -19,10 +19,6 @@ abstract class BasePagingFragment : BaseFragment<FragmentMainBinding>() {
 
     protected lateinit var tmdbAdapter: TmdbAdapter
 
-    protected fun refresh() {
-        viewModel.refresh()
-    }
-
     override fun setBinding() = FragmentMainBinding.inflate(layoutInflater)
 
     override fun onCreateView(
@@ -49,7 +45,7 @@ abstract class BasePagingFragment : BaseFragment<FragmentMainBinding>() {
                     isRefreshing = it.status == RUNNING
                 }
 
-                setOnRefreshListener { refresh() }
+                setOnRefreshListener { viewModel.refresh() }
             }
 
             recyclerView.apply {
