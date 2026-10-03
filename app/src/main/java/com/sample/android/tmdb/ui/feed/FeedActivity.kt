@@ -7,16 +7,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.databinding.ActivityFeedBinding
 import com.sample.android.tmdb.ui.base.BaseNavigationActivity
 import com.sample.android.tmdb.ui.feed.movie.FeedMovieFragment
 import com.sample.android.tmdb.ui.feed.tvshow.FeedTVShowFragment
 import com.sample.android.tmdb.ui.setting.SettingFragment
-import com.sample.android.tmdb.util.addFragmentToActivity
-import com.sample.android.tmdb.util.replaceFragmentInActivity
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class FeedActivity : BaseNavigationActivity() {
@@ -47,21 +45,7 @@ class FeedActivity : BaseNavigationActivity() {
         viewModel.headline.observe(this) {
             title = getString(it)
         }
-
-        feedMovieFragment =
-            (supportFragmentManager.findFragmentByTag(TAG_MOVIE) as? FeedMovieFragment)
-                ?.also { Timber.d("FeedMovieFragment restored: %s", it) } ?: FeedMovieFragment()
-        feedTVShowFragment =
-            (supportFragmentManager.findFragmentByTag(TAG_TV) as? FeedTVShowFragment)
-                ?.also { Timber.d("FeedTVShowFragment restored: %s", it) } ?: FeedTVShowFragment()
-        settingFragment =
-            (supportFragmentManager.findFragmentByTag(TAG_SETTING) as? SettingFragment)
-                ?.also { Timber.d("FeedSettingFragment restored: %s", it) } ?: SettingFragment()
-
-        if (savedInstanceState == null) {
-            addFragmentToActivity(feedMovieFragment, R.id.fragment_container, TAG_MOVIE)
-            binding.navView.setCheckedItem(R.id.action_movies)
-        }
+        setupFragments(savedInstanceState)
         setupNavigationView()
 
         val toggle = ActionBarDrawerToggle(
@@ -80,33 +64,78 @@ class FeedActivity : BaseNavigationActivity() {
         }
     }
 
+    private fun setupFragments(savedInstanceState: Bundle?) {
+        val fm = supportFragmentManager
+
+        if (savedInstanceState == null) {
+            binding.navView.setCheckedItem(R.id.action_movies)
+            feedMovieFragment = FeedMovieFragment()
+            feedTVShowFragment = FeedTVShowFragment()
+            settingFragment = SettingFragment()
+
+            fm.beginTransaction()
+                .add(R.id.fragment_container, feedMovieFragment, TAG_MOVIE)
+                .add(R.id.fragment_container, feedTVShowFragment, TAG_TV)
+                .add(R.id.fragment_container, settingFragment, TAG_SETTING)
+                .hide(feedTVShowFragment)
+                .hide(settingFragment)
+                .commit()
+        } else {
+            feedMovieFragment =
+                fm.findFragmentByTag(TAG_MOVIE) as FeedMovieFragment
+
+            feedTVShowFragment =
+                fm.findFragmentByTag(TAG_TV) as FeedTVShowFragment
+
+            settingFragment =
+                fm.findFragmentByTag(TAG_SETTING) as SettingFragment
+        }
+    }
+
     private fun setupNavigationView() {
         binding.navView.setNavigationItemSelectedListener { item ->
             binding.drawerLayout.closeDrawer(GravityCompat.START)
-            val (fragment, tag) = when (item.itemId) {
+
+            when (item.itemId) {
                 R.id.action_movies -> {
-                    viewModel.setType(R.string.menu_movies, NavType.MOVIES)
-                    Pair(feedMovieFragment, TAG_MOVIE)
+                    viewModel.setType(
+                        R.string.menu_movies,
+                        NavType.MOVIES
+                    )
+                    selectFragment(feedMovieFragment)
                 }
 
                 R.id.action_tv_series -> {
-                    viewModel.setType(R.string.menu_tv_series, NavType.TV_SERIES)
-                    Pair(feedTVShowFragment, TAG_TV)
-
+                    viewModel.setType(
+                        R.string.menu_tv_series,
+                        NavType.TV_SERIES
+                    )
+                    selectFragment(feedTVShowFragment)
                 }
 
                 R.id.action_setting -> {
-                    viewModel.setType(R.string.menu_setting, NavType.SETTING)
-                    Pair(settingFragment, TAG_SETTING)
-
+                    viewModel.setType(
+                        R.string.menu_setting,
+                        NavType.SETTING
+                    )
+                    selectFragment(settingFragment)
                 }
 
-                else -> throw RuntimeException("Unknown item to replace fragment")
+                else -> error("Unknown navigation item")
             }
+
             invalidateOptionsMenu()
-            replaceFragmentInActivity(fragment, R.id.fragment_container, tag)
             true
         }
+    }
+
+    private fun selectFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .hide(feedMovieFragment)
+            .hide(feedTVShowFragment)
+            .hide(settingFragment)
+            .show(fragment)
+            .commit()
     }
 
     companion object {
