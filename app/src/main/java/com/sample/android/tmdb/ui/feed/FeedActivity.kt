@@ -14,6 +14,7 @@ import com.sample.android.tmdb.ui.base.BaseNavigationActivity
 import com.sample.android.tmdb.ui.feed.movie.FeedMovieFragment
 import com.sample.android.tmdb.ui.feed.tvshow.FeedTVShowFragment
 import com.sample.android.tmdb.ui.setting.SettingFragment
+import com.sample.android.tmdb.util.addFragmentToActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,9 +34,9 @@ class FeedActivity : BaseNavigationActivity() {
 
     override val textViewNetworkStatus: TextView by lazy { binding.itemContainer.textViewNetworkStatus }
 
-    private lateinit var feedMovieFragment: FeedMovieFragment
-    private lateinit var feedTVShowFragment: FeedTVShowFragment
-    private lateinit var settingFragment: SettingFragment
+    private var feedMovieFragment: FeedMovieFragment? = null
+    private var feedTVShowFragment: FeedTVShowFragment? = null
+    private var settingFragment: SettingFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,30 +66,21 @@ class FeedActivity : BaseNavigationActivity() {
     }
 
     private fun setupFragments(savedInstanceState: Bundle?) {
-        val fm = supportFragmentManager
-
         if (savedInstanceState == null) {
             binding.navView.setCheckedItem(R.id.action_movies)
             feedMovieFragment = FeedMovieFragment()
-            feedTVShowFragment = FeedTVShowFragment()
-            settingFragment = SettingFragment()
-
-            fm.beginTransaction()
-                .add(R.id.fragment_container, feedMovieFragment, TAG_MOVIE)
-                .add(R.id.fragment_container, feedTVShowFragment, TAG_TV)
-                .add(R.id.fragment_container, settingFragment, TAG_SETTING)
-                .hide(feedTVShowFragment)
-                .hide(settingFragment)
-                .commit()
+            addFragmentToActivity(feedMovieFragment!!, R.id.fragment_container, TAG_MOVIE)
         } else {
+            val fm = supportFragmentManager
+
             feedMovieFragment =
                 fm.findFragmentByTag(TAG_MOVIE) as FeedMovieFragment
 
             feedTVShowFragment =
-                fm.findFragmentByTag(TAG_TV) as FeedTVShowFragment
+                fm.findFragmentByTag(TAG_TV) as? FeedTVShowFragment
 
             settingFragment =
-                fm.findFragmentByTag(TAG_SETTING) as SettingFragment
+                fm.findFragmentByTag(TAG_SETTING) as? SettingFragment
         }
     }
 
@@ -102,7 +94,7 @@ class FeedActivity : BaseNavigationActivity() {
                         R.string.menu_movies,
                         NavType.MOVIES
                     )
-                    selectFragment(feedMovieFragment)
+                    showFragment(feedMovieFragment!!, TAG_MOVIE)
                 }
 
                 R.id.action_tv_series -> {
@@ -110,7 +102,10 @@ class FeedActivity : BaseNavigationActivity() {
                         R.string.menu_tv_series,
                         NavType.TV_SERIES
                     )
-                    selectFragment(feedTVShowFragment)
+                    showFragment(
+                        feedTVShowFragment ?: FeedTVShowFragment().also { feedTVShowFragment = it },
+                        TAG_TV
+                    )
                 }
 
                 R.id.action_setting -> {
@@ -118,7 +113,10 @@ class FeedActivity : BaseNavigationActivity() {
                         R.string.menu_setting,
                         NavType.SETTING
                     )
-                    selectFragment(settingFragment)
+                    showFragment(
+                        settingFragment ?: SettingFragment().also { settingFragment = it },
+                        TAG_SETTING
+                    )
                 }
 
                 else -> error("Unknown navigation item")
@@ -129,13 +127,21 @@ class FeedActivity : BaseNavigationActivity() {
         }
     }
 
-    private fun selectFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .hide(feedMovieFragment)
-            .hide(feedTVShowFragment)
-            .hide(settingFragment)
-            .show(fragment)
-            .commit()
+    private fun showFragment(fragment: Fragment, tag: String) {
+        val fm = supportFragmentManager
+
+        fm.beginTransaction().apply {
+            fm.fragments.filter {
+                it.isAdded && !it.isHidden
+            }.forEach { hide(it) }
+
+            if (!fragment.isAdded) {
+                add(R.id.fragment_container, fragment, tag)
+            } else {
+                show(fragment)
+            }
+            commit()
+        }
     }
 
     companion object {
