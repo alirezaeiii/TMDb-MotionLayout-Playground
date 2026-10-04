@@ -74,7 +74,7 @@ class FeedActivity : BaseNavigationActivity() {
             val fm = supportFragmentManager
 
             feedMovieFragment =
-                fm.findFragmentByTag(TAG_MOVIE) as FeedMovieFragment
+                fm.findFragmentByTag(TAG_MOVIE) as? FeedMovieFragment
 
             feedTVShowFragment =
                 fm.findFragmentByTag(TAG_TV) as? FeedTVShowFragment
@@ -94,7 +94,10 @@ class FeedActivity : BaseNavigationActivity() {
                         R.string.menu_movies,
                         NavType.MOVIES
                     )
-                    showFragment(feedMovieFragment!!, TAG_MOVIE)
+                    showFragment(
+                        feedMovieFragment ?: FeedMovieFragment().also { feedMovieFragment = it },
+                        TAG_MOVIE
+                    )
                 }
 
                 R.id.action_tv_series -> {
