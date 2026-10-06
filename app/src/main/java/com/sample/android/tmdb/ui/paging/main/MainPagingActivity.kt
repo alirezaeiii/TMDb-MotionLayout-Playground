@@ -34,9 +34,6 @@ abstract class MainPagingActivity : BaseNavigationActivity() {
             SortType.DISCOVER -> R.string.discover
         }
 
-    protected open val screenTitle: String
-        get() = getString(titleResId, getString(subTitleResId))
-
     override val toolbar: Toolbar
         get() = binding.toolbar
 
@@ -51,7 +48,7 @@ abstract class MainPagingActivity : BaseNavigationActivity() {
         setupActionBar(binding.toolbar) {
             setDisplayHomeAsUpEnabled(true)
         }
-        title = screenTitle
+        title = getString(titleResId, getString(subTitleResId))
         if (savedInstanceState == null) {
             addFragmentToActivity(fragment, R.id.fragment_container)
         }
