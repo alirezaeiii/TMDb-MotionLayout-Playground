@@ -21,7 +21,7 @@ abstract class MainPagingActivity : BaseNavigationActivity() {
 
     protected abstract val subTitleResId: Int
 
-    protected open val sortType: SortType
+    protected val sortType: SortType
         get() = intent.getParcelableExtra(EXTRA_SORT_TYPE)!!
 
     protected open val titleResId: Int
