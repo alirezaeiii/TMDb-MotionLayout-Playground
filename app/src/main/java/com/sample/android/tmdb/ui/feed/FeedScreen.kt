@@ -2,6 +2,7 @@ package com.sample.android.tmdb.ui.feed
 
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -33,8 +34,9 @@ import com.sample.android.tmdb.domain.model.TVShow
 import com.sample.android.tmdb.domain.model.TmdbItem
 import com.sample.android.tmdb.ui.common.Dimens
 import com.sample.android.tmdb.ui.common.TmdbTheme
-import com.sample.android.tmdb.ui.paging.main.movie.*
-import com.sample.android.tmdb.ui.paging.main.tvshow.*
+import com.sample.android.tmdb.ui.paging.main.movie.MoviePagingActivity
+import com.sample.android.tmdb.ui.paging.main.tvshow.TVShowPagingActivity
+import com.sample.android.tmdb.util.Constants.EXTRA_SORT_TYPE
 import com.sample.android.tmdb.util.conditional
 
 @Composable
@@ -61,7 +63,7 @@ private fun FeedCollection(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    Column(modifier = modifier.conditional(index != SortType.values().lastIndex) {
+    Column(modifier = modifier.conditional(index != SortType.entries.toTypedArray().lastIndex) {
         padding(bottom = 32.dp)
     }) {
         Row(
@@ -161,65 +163,13 @@ private fun moreFeedOnClick(
     sortType: SortType
 ) {
     val activityClass = when (tmdbItem) {
-        is Movie -> {
-            when (sortType) {
-                SortType.TRENDING -> {
-                    TrendingMoviesActivity::class.java
-                }
-
-                SortType.MOST_POPULAR -> {
-                    PopularMoviesActivity::class.java
-                }
-
-                SortType.UPCOMING -> {
-                    UpcomingMoviesActivity::class.java
-                }
-
-                SortType.HIGHEST_RATED -> {
-                    HighRateMoviesActivity::class.java
-                }
-
-                SortType.NOW_PLAYING -> {
-                    NowPlayingMoviesActivity::class.java
-                }
-
-                SortType.DISCOVER -> {
-                    DiscoverMoviesActivity::class.java
-                }
-            }
-        }
-
-        is TVShow -> {
-            when (sortType) {
-                SortType.TRENDING -> {
-                    TrendingTVShowActivity::class.java
-                }
-
-                SortType.MOST_POPULAR -> {
-                    PopularTVShowActivity::class.java
-                }
-
-                SortType.UPCOMING -> {
-                    OnTheAirTVShowActivity::class.java
-                }
-
-                SortType.HIGHEST_RATED -> {
-                    HighRateTVShowActivity::class.java
-                }
-
-                SortType.NOW_PLAYING -> {
-                    AiringTodayTVShowActivity::class.java
-                }
-
-                SortType.DISCOVER -> {
-                    DiscoverTVShowsActivity::class.java
-                }
-            }
-        }
-
+        is Movie -> MoviePagingActivity::class.java
+        is TVShow -> TVShowPagingActivity::class.java
         else -> throw RuntimeException("Unknown item to start paging Activity")
     }
-    val intent = Intent(context, activityClass)
+    val intent = Intent(context, activityClass).apply {
+        putExtra(EXTRA_SORT_TYPE, sortType as Parcelable)
+    }
     context.startActivity(intent)
 }
 

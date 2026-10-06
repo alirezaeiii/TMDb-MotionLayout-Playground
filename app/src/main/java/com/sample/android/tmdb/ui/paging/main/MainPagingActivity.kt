@@ -7,7 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.sample.android.tmdb.R
 import com.sample.android.tmdb.databinding.ActivityMainBinding
+import com.sample.android.tmdb.domain.model.SortType
 import com.sample.android.tmdb.ui.base.BaseNavigationActivity
+import com.sample.android.tmdb.util.Constants.EXTRA_SORT_TYPE
 import com.sample.android.tmdb.util.addFragmentToActivity
 import com.sample.android.tmdb.util.setupActionBar
 
@@ -17,7 +19,23 @@ abstract class MainPagingActivity : BaseNavigationActivity() {
 
     protected abstract val fragment: BaseMainPagingFragment
 
-    protected abstract val screenTitle: String
+    protected abstract val subTitleResId: Int
+
+    protected open val sortType: SortType
+        get() = intent.getParcelableExtra(EXTRA_SORT_TYPE)!!
+
+    protected open val titleResId: Int
+        get() = when (sortType) {
+            SortType.TRENDING -> R.string.trending
+            SortType.MOST_POPULAR -> R.string.popular
+            SortType.UPCOMING -> R.string.upcoming
+            SortType.HIGHEST_RATED -> R.string.highest_rate
+            SortType.NOW_PLAYING -> R.string.now_playing
+            SortType.DISCOVER -> R.string.discover
+        }
+
+    protected open val screenTitle: String
+        get() = getString(titleResId, getString(subTitleResId))
 
     override val toolbar: Toolbar
         get() = binding.toolbar
