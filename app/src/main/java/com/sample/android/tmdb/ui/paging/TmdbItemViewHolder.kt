@@ -10,7 +10,7 @@ class TmdbItemViewHolder(val binding: TmdbItemBinding)
     : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
-        fun <T : TmdbItem> create(parent: ViewGroup, tmdbClickCallback: TmdbClickCallback<T>): TmdbItemViewHolder {
+        fun create(parent: ViewGroup, tmdbClickCallback: TmdbClickCallback<TmdbItem>): TmdbItemViewHolder {
             val binding: TmdbItemBinding = TmdbItemBinding.inflate(parent.context.layoutInflater,
                     parent, false)
             binding.callback = tmdbClickCallback
