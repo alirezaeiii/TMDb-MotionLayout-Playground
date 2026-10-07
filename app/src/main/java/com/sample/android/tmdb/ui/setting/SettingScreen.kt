@@ -226,6 +226,6 @@ sealed interface Settings {
 
 private const val TMDB_REPO_URL = "https://github.com/alirezaeiii/TMDb-Paging-Playground"
 private const val TMDB_POLICY_URL =
-    "https://docs.google.com/document/d/10tQW2au7MCCYI8D1CZKU5jkpdbsUvsB6wCQ-7ysoT04/edit"
+    "https://docs.google.com/document/d/e/2PACX-1vRgBMS7FCrcfWq0Zv9YfbGAZPYLomO01Ef4WeCKAjtQip6klgC1qm_BphHOkpyuhiSwvK8tjOYCyO0t/pub"
 private const val DIVIDER_ALPHA = 0.12f
 private val iconShapeSize = 32.dp
