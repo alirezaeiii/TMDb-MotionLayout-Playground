@@ -12,7 +12,6 @@ class Application : android.app.Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Set up Timber
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
 
         initFirebaseRemoteConfig()

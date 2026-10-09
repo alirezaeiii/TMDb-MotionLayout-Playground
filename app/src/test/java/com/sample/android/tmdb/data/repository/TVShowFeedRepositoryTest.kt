@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Before
@@ -50,28 +51,26 @@ class TVShowFeedRepositoryTest {
     }
 
     @Test
-    fun `test Api Succeeds`() {
-        testCoroutineRule.runBlockingTest {
-            `when`(tvShowApi.trendingTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-            `when`(tvShowApi.popularTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-            `when`(tvShowApi.onTheAirTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-            `when`(tvShowApi.topRatedTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-            `when`(tvShowApi.airingTodayTVSeries()).thenReturn(TMDbWrapper(emptyList()))
-            `when`(tvShowApi.discoverTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+    fun `test Api Succeeds`() = runTest {
+        `when`(tvShowApi.trendingTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(tvShowApi.popularTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(tvShowApi.onTheAirTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(tvShowApi.topRatedTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(tvShowApi.airingTodayTVSeries()).thenReturn(TMDbWrapper(emptyList()))
+        `when`(tvShowApi.discoverTVSeries()).thenReturn(TMDbWrapper(emptyList()))
 
-            val repository = TVShowFeedRepository(context, Dispatchers.Main, tvShowApi)
+        val repository = TVShowFeedRepository(context, Dispatchers.Main, tvShowApi)
 
-            assertThat(repository.result.first(), `is`(Resource.Loading))
+        assertThat(repository.result.first(), `is`(Resource.Loading))
 
-            val result = (repository.result.last() as Resource.Success).data
+        val result = (repository.result.last() as Resource.Success).data
 
-            assertThat(result[0].feeds, `is`(emptyList()))
-            assertThat(result[1].feeds, `is`(emptyList()))
-            assertThat(result[2].feeds, `is`(emptyList()))
-            assertThat(result[3].feeds, `is`(emptyList()))
-            assertThat(result[4].feeds, `is`(emptyList()))
-            assertThat(result[5].feeds, `is`(emptyList()))
-        }
+        assertThat(result[0].feeds, `is`(emptyList()))
+        assertThat(result[1].feeds, `is`(emptyList()))
+        assertThat(result[2].feeds, `is`(emptyList()))
+        assertThat(result[3].feeds, `is`(emptyList()))
+        assertThat(result[4].feeds, `is`(emptyList()))
+        assertThat(result[5].feeds, `is`(emptyList()))
     }
 
     @Test
@@ -79,7 +78,7 @@ class TVShowFeedRepositoryTest {
         val errorMsg = "error message"
         `when`(context.getString(anyInt())).thenReturn(errorMsg)
 
-        testCoroutineRule.runBlockingTest {
+        runTest {
 
             val repository = TVShowFeedRepository(context, Dispatchers.Main, tvShowApi)
 
