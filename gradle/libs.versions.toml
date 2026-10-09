@@ -1,0 +1,116 @@
+[versions]
+compileSdk = "35"
+minSdk = "21"
+targetSdk = "35"
+
+# Plugins
+agp = "9.0.0"
+googleServices = "4.4.4"
+hilt = "2.60.1"
+ksp = "2.3.10"
+composeCompiler = "2.4.20"
+
+# Libraries
+appcompat = "1.5.1"
+material = "1.6.1"
+swiperefreshlayout = "1.1.0"
+palette = "1.0.0"
+constraintlayout = "2.1.4"
+guava = "27.0.1-android"
+fragmentKtx = "1.8.0"
+paging = "2.0.0"
+lifecycle = "2.5.1"
+archLifecycle = "2.1.0"
+compose = "1.1.1"
+activityCompose = "1.3.1"
+coilCompose = "1.4.0"
+gson = "2.8.5"
+retrofit = "2.9.0"
+rxjava = "2.1.9"
+rxandroid = "2.1.0"
+okhttp = "4.11.0"
+circleimageview = "2.2.0"
+glide = "4.8.0"
+timber = "4.7.1"
+coroutines = "1.5.2"
+playCore = "1.10.2"
+firebaseBom = "28.3.0"
+junit = "4.12"
+mockito = "2.23.0"
+mockk = "1.10.0"
+runner = "1.1.0"
+rules = "1.1.0"
+espresso = "3.1.0"
+okhttpIdlingResource = "1.0.0"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-palette-ktx = { group = "androidx.palette", name = "palette-ktx", version.ref = "palette" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle" }
+
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-adapter-rxjava2 = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit-mock = { group = "com.squareup.retrofit2", name = "retrofit-mock", version.ref = "retrofit" }
+
+rxjava = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxjava" }
+rxandroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid" }
+
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+
+play-core = { group = "com.google.android.play", name = "core", version.ref = "playCore" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+
+# Testing
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "archLifecycle" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+test-runner = { group = "com.android.support.test", name = "runner", version.ref = "runner" }
+test-rules = { group = "com.android.support.test", name = "rules", version.ref = "rules" }
+espresso-core = { group = "com.android.support.test.espresso", name = "espresso-core", version.ref = "espresso" }
+espresso-contrib = { group = "com.android.support.test.espresso", name = "espresso-contrib", version.ref = "espresso" }
+espresso-intents = { group = "com.android.support.test.espresso", name = "espresso-intents", version.ref = "espresso" }
+espresso-idling-resource = { group = "com.android.support.test.espresso", name = "espresso-idling-resource", version.ref = "espresso" }
+okhttp3-idling-resource = { group = "com.jakewharton.espresso", name = "okhttp3-idling-resource", version.ref = "okhttpIdlingResource" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composeCompiler" }
+legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }

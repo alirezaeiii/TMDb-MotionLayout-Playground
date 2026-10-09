@@ -1,11 +1,11 @@
 plugins {
-    id("com.android.application")
+    alias(libs.plugins.android.application)
     id("kotlin-parcelize")
-    id("com.google.gms.google-services")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.plugin.compose")
-    id("com.android.legacy-kapt")
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.legacy.kapt)
 }
 
 def appVersion = (new File(project.rootDir, 'version.txt')).text.trim()
@@ -60,82 +60,82 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support libraries
-    implementation "androidx.appcompat:appcompat:$appCompat"
-    implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshVersion"
-    implementation "androidx.palette:palette-ktx:$paletteVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "com.google.guava:guava:$guavaVersion"
+    implementation libs.androidx.appcompat
+    implementation libs.material
+    implementation libs.androidx.swiperefreshlayout
+    implementation libs.androidx.palette.ktx
+    implementation libs.androidx.constraintlayout
+    implementation libs.guava
 
-    implementation "androidx.fragment:fragment-ktx:1.8.0"
+    implementation libs.androidx.fragment.ktx
 
     // Architecture components
-    implementation "androidx.paging:paging-runtime:$pagingVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation libs.androidx.paging.runtime
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.lifecycle.livedata.ktx
 
     // Compose
-    implementation "androidx.compose.ui:ui:$compose"
-    implementation "androidx.compose.material:material:$compose"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose"
-    implementation "androidx.compose.ui:ui-tooling-preview:$compose"
-    implementation "androidx.activity:activity-compose:$activity_compose"
-    implementation 'io.coil-kt:coil-compose:1.4.0'
+    implementation libs.compose.ui
+    implementation libs.compose.material
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.ui.tooling.preview
+    implementation libs.activity.compose
+    implementation libs.coil.compose
 
     // Gson
-    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation libs.gson
 
     // Retrofit
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:retrofit-mock:$retrofitVersion"
+    implementation libs.retrofit
+    implementation libs.retrofit.adapter.rxjava2
+    implementation libs.retrofit.converter.gson
+    implementation libs.retrofit.mock
 
     //Android RX
-    implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroidVersion"
+    implementation libs.rxjava
+    implementation libs.rxandroid
 
     // Other
-    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    ksp "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation libs.okhttp.logging.interceptor
+    implementation libs.circleimageview
+    implementation libs.glide
+    ksp libs.glide.compiler
 
     // Timber
-    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation libs.timber
 
     // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation libs.coroutines.android
 
     // Dagger
-    implementation "com.google.dagger:hilt-android:2.60.1"
-    ksp "com.google.dagger:hilt-android-compiler:2.60.1"
+    implementation libs.hilt.android
+    ksp libs.hilt.compiler
 
     // Firebase
-    implementation 'com.google.android.play:core:1.10.2'
-    implementation platform('com.google.firebase:firebase-bom:28.3.0')
-    implementation 'com.google.firebase:firebase-config-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation libs.play.core
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.config.ktx
+    implementation libs.firebase.analytics.ktx
 
     // Dependencies for local unit tests
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation libs.junit
+    testImplementation libs.mockito.core
 
-    testImplementation "androidx.arch.core:core-testing:$archLifecycleVersion"
+    testImplementation libs.androidx.arch.core.testing
     // mock extension function
-    testImplementation "io.mockk:mockk:$mockkVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
+    testImplementation libs.mockk
+    testImplementation libs.coroutines.test
 
     // Android Testing Support Library's runner and rules
-    androidTestImplementation "com.android.support.test:runner:$runnerVersion"
-    androidTestImplementation "com.android.support.test:rules:$rulesVersion"
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
 
     // Espresso UI Testing
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espressoVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espressoVersion"
-    androidTestImplementation "com.jakewharton.espresso:okhttp3-idling-resource:$okhttpIdlingResourceVersion"
-    implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.espresso.contrib
+    androidTestImplementation libs.espresso.intents
+    androidTestImplementation libs.okhttp3.idling.resource
+    implementation libs.espresso.idling.resource
 }
 
 def getProperty(String filename, String propName) {
