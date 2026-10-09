@@ -1,7 +1,7 @@
 package com.sample.android.tmdb.domain.model
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 interface Credit : Parcelable {
     val id: Int
