@@ -99,7 +99,7 @@ dependencies {
     implementation libs.okhttp.logging.interceptor
     implementation libs.circleimageview
     implementation libs.glide
-    annotationProcessor libs.glide.compiler
+    ksp libs.glide.compiler
 
     // Timber
     implementation libs.timber
